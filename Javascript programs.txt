@@ -1,0 +1,274 @@
+                                    Javascript programs
+
+
+1) Javascript function to convert roman numbers to numbers.
+
+code
+
+
+  function romanToDecimal(romanNumeral) {
+  
+  const romanNumerals = {
+    I: 1,
+    V: 5,
+    X: 10,
+    L: 50,
+    C: 100,
+    D: 500,
+    M: 1000,
+  };
+  
+  let decimalNum = 0;
+  for (let i = 0; i < romanNumeral.length; i++) {
+    const currentNumeral = romanNumeral[i];
+    const currentDecimal = romanNumerals[currentNumeral];
+    
+    
+    const nextNumeral = romanNumeral[i+1];
+    const nextDecimal = romanNumerals[nextNumeral];
+    
+    if (nextDecimal && nextDecimal > currentDecimal) {
+      decimalNum -= currentDecimal;
+    } else {
+      decimalNum += currentDecimal;
+    }
+  }
+  
+  return decimalNum;
+}
+console.log(romanToDecimal("XL"));
+
+***********************************************************************************************************************************************************
+
+
+2) Javascript function to find pair of the numbers which is equal to the target number.
+
+code
+
+Function pair(target)
+{
+ const a=[3,4,5,6,7,1,0];
+ let i,j;
+ for(i=0;i<a.length;i++)
+ {
+  for(j=i+1;j<a.length;j++)
+  {
+    if(a[i]+a[j]==target)
+      console.log(a[i]+" "+a[j]);
+  }
+ }
+}
+pair(7);
+
+************************************************************************************************************************************************************
+
+3) Function to reverse a string and give some proper exception if the user is giving other language.
+
+code
+
+function reverse(str)
+{
+ const m=/[^a-zA-Z]/;
+ if(m.test(str))
+ {
+  throw new Error("Input must contain only English characters");
+ }
+let s="";
+let i;
+ for(i=str.length-1;i>=0;i--)
+   s=s+str[i];
+ console.log(s);
+}
+try
+{
+ reverse("james");
+}catch(error)
+{
+ console.log(error.message);
+}
+
+************************************************************************************************************************************************************
+
+4) Proper validation of user data to the application using html,css and javascript.
+
+code
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Data Form</title>
+  <style>
+    form {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    margin: 0 auto;
+  }
+  
+  label {
+    margin-bottom: 10px;
+  }
+  
+  input,
+  select,
+  textarea {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: none;
+    border: 1px solid #555;
+  }
+  
+  button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #3e8e41;
+  }
+  
+  /* error message styling */
+  
+  .error {
+    color: red;
+    margin-top: 5px;
+  }
+  
+  /* success message styling */
+  
+  .success {
+    color: green;
+    margin-top: 5px;
+  }
+  
+  /* password strength meter styling */
+  
+  #password-strength-meter {
+    display: flex;
+    margin-top: 10px;
+  }
+  
+  #password-strength-meter > div {
+    height: 10px;
+    margin-right: 5px;
+    background-color: #DDD;
+  }
+  
+  #password-strength-meter .weak {
+    background-color: #F44336;
+  }
+  
+  #password-strength-meter .medium {
+    background-color: #FFC107;
+  }
+  
+  #password-strength-meter .strong {
+    background-color: #4CAF50;
+  }
+  
+  #password-strength-meter .very-strong {
+    background-color: #2196F3;
+  }
+  
+
+  </style>
+</head>
+<body>
+  <form id="userDataForm">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required><br>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" 
+    title="Password must be at least 8 characters long and contain at least one letter and one number." required><br>
+
+    <label for="confirmPassword">Confirm Password:</label>
+    <input type="password" id="confirmPassword" name="confirmPassword" required><br>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <div id="submissionMessage"></div>
+
+  <script>
+    const form = document.getElementById('userDataForm');
+    const submissionMessage = document.getElementById('submissionMessage');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      let isValid = true;
+
+      const nameInput = form.querySelector('#name');
+      const emailInput = form.querySelector('#email');
+      const passwordInput = form.querySelector('#password');
+      const confirmPasswordInput = form.querySelector('#confirmPassword');
+
+      const name = nameInput.value;
+      const email = emailInput.value;
+      const password = passwordInput.value;
+      const confirmPassword = confirmPasswordInput.value;
+
+      // Validate name input
+      if (name.trim() === '') {
+        nameInput.setCustomValidity('Name is required');
+        isValid = false;
+      } else {
+        nameInput.setCustomValidity('');
+      }
+
+      // Validate email input
+      if (email.trim() === '') {
+        emailInput.setCustomValidity('Email is required');
+        isValid = false;
+      } else if (!/^\S+@\S+\.\S+$/.test(email)) {
+        emailInput.setCustomValidity('Invalid email format');
+        isValid = false;
+      } else {
+        emailInput.setCustomValidity('');
+      }
+
+      // Validate password input
+      if (password.trim() === '') {
+        passwordInput.setCustomValidity('Password is required');
+        isValid = false;
+      } else if (password !== confirmPassword) {
+        confirmPasswordInput.setCustomValidity('Passwords do not match');
+        isValid = false;
+      } else {
+        confirmPasswordInput.setCustomValidity('');
+        if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password)) {
+          passwordInput.setCustomValidity('Password must be at least 8 characters long and contain at least one letter and one number.');
+          isValid = false;
+        } else {
+          passwordInput.setCustomValidity('');
+        }
+      }
+
+      // Submit form if all inputs are valid
+      if (isValid) {
+        submissionMessage.textContent = 'Submitting...';
+        setTimeout(function() {
+          submissionMessage.textContent = 'Submitted!';
+          form.reset();
+        }, 2000);
+      }
+    });
+  </script>
+</body>
+</html>
